@@ -159,7 +159,8 @@ extern "C" {
 			double scorevar,   // can be negative, otherwise residual variance used in score test
 			// ON RETURN
 			gsl_vector * beta, // length ncolX, estimates
-			gsl_matrix * V    // ncolX x ncolX, var-cov matrix
+			gsl_matrix * V,    // ncolX x ncolX, var-cov matrix
+			unsigned short int minimal // only betas to be returned
 	)
 	{
 		//gsl_vector_fprintf(stdout,Y,"Y=%f");
@@ -167,6 +168,8 @@ extern "C" {
 		int tmpStatus = 0, Status = 0;
 		double T2 = -2.0; // return chi2 test stat value or -2.0 if failed; -1.0 means could not invert
 
+
+		//cout << "minimal = " << minimal << "\n";
 		/**
   if (any(is.na(Y)) || any(is.na(X))) {
     warning("missing data points in Y or X, dropping")
@@ -279,6 +282,11 @@ extern "C" {
 
 
 		gsl_matrix_memcpy(V,XpWXm1);
+
+		if (minimal) {
+			//cout << "oooo";
+			return(0.01);
+		}
 
 		/**
   # estimate V

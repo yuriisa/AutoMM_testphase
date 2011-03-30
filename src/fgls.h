@@ -22,7 +22,8 @@ extern "C" {
 			double scorevar,   // can be null, otherwise residual variance used in score test
 			// ON RETURN
 			gsl_vector * beta, // length ncolX, estimates
-			gsl_matrix * V
+			gsl_matrix * V,
+			unsigned short int minimal
 	);
 
 	SEXP fgls_caller (SEXP RinY, SEXP RinX,

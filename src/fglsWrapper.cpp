@@ -29,6 +29,7 @@ extern "C" {
 			//SEXP codingGT, [7]
 			//SEXP mincall, [8]
 			//SEXP RinScoreVar [9]
+			//SEXP minimal [10]
 	)
 	{
 
@@ -37,6 +38,7 @@ extern "C" {
 		unsigned int outsize_Ncol = 1+2*ncol+ncol*(ncol+1)/2;
 
 		//unsigned int ncol = (INTEGER(getAttrib(RinX,R_DimSymbol))[1]);
+
 		if (indata) {
 			//SEXP X;
 			unsigned int nrow = tmp_gsl_X->size1;
@@ -335,13 +337,16 @@ extern "C" {
 			double scorevar = NULL;      // should provide residual variance used in score test (if score used)
 			if (argList[9] != R_NilValue) scorevar = REAL(argList[9])[0];
 
+			unsigned short int minimal = INTEGER(argList[10])[0];   // only betas
+			//Rprintf("minimal = %d\n", minimal);
+
 			// ON RETURN
 			gsl_vector * beta = gsl_vector_alloc(ncol);     // length ncolX, estimates
 			gsl_matrix * V = gsl_matrix_alloc(ncol,ncol);        // ncolX x ncolX, var-cov matrix
 			double T2 = -2.0;       // chi2 test statistic
 
 			//gsl_matrix_fprintf(stdout,gsl_X,"before fgsl gsl_X=%f");
-			T2 = fgls(Y, gsl_X, test, W, tXWfixed, WhichToTest, scorevar, beta, V);
+			T2 = fgls(Y, gsl_X, test, W, tXWfixed, WhichToTest, scorevar, beta, V, minimal);
 
 			outdata[0] = T2;
 			unsigned int k = 1;
@@ -394,7 +399,7 @@ extern "C" {
 			//for (unsigned int i = 0; i< outsize_Ncol ; i++ )
 			//{
 			//	outdata[i] = tmpout_double_ptr[i];
-				//Rprintf("out %d %f ",i,outdata[i]);
+			//	Rprintf("out %d %f ",i,outdata[i]);
 			//}
 			//UNPROTECT(3);
 			gsl_matrix_free(gsl_X);

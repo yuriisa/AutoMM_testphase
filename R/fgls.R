@@ -269,7 +269,7 @@ GWFGLS <-
 				model.SNP = "additive",
 				genodata,gtcoding = "typed",verbosity=1, varcov = FALSE, 
 				include.means = TRUE, singular = "ignore", with.lm = FALSE,
-				old=FALSE)
+				old=FALSE, minimal = FALSE)
 # test in c("wald","score","robust")
 # model.SNP in c("additive","dominantB","recessiveB","overdominant","genotypic")
 # verbosity 0 : only chi2 and df, 1: only SNP-related; 2 -- all betas and se of betas
@@ -515,13 +515,13 @@ GWFGLS <-
 		
 		#mgls <- FGLS(Y=finaldata$Y,X=finaldata$X,whichtest=(finaldata$snpinvolved>0))
 		#print("before fake_iterator")
-		#print(finaldata$X)
+		#print(c("minimal",as.integer(minimal)))
 		resIteratorNew <- .Call("iterator", genodata, 
 				as.integer(gtNrow), as.integer(gtNcol),
 				as.character("fgls"),
 				"R", as.integer(2), 
 				as.integer(1), # STEP 
-				as.integer(10), 
+				as.integer(11), 
 				SEXP_ptr_to_gsl_Y, SEXP_ptr_to_gsl_X,
 				SEXP_ptr_to_gsl_tXW_fixed, SEXP_ptr_to_gsl_W,
 				as.integer(intstattests),
@@ -529,7 +529,8 @@ GWFGLS <-
 				as.integer(which(model.SNP==genomodel)),
 				as.integer(which(gtcoding==charcoding)),
 				as.double(mincall),
-				as.double(sigma2.score))
+				as.double(sigma2.score),
+				as.integer(minimal))
 		#if (!is(resIteratorNew,"matrix")) resIteratorNew <- matrix(resIteratorNew,nrow=1)
 		#print("after fake_iterator")
 		mgls <- FGLS(Y=finaldata$Y,X=finaldata$X,whichtest=(finaldata$snpinvolved>0))
