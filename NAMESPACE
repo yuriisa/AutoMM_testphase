@@ -1,0 +1,11 @@
+useDynLib(MixABEL)
+
+export(
+	rwth_caller,
+	FastMixedModel,
+	GWFGLS,
+	FGLS,
+	summaryFGLS #,
+	#deliver.data
+	)
+	

@@ -1,0 +1,10 @@
+RUNIT TEST PROTOCOL -- Wed Feb 23 13:11:17 2011 
+*********************************************** 
+Number of test functions: 4 
+Number of errors: 0 
+Number of failures: 1 
+
+ 
+1 Test Suite : 
+MixABEL unit testing - 4 test functions, 0 errors, 1 failure
+FAILURE in test.iterator_sum: Error in checkIdentical(dataReal, as(dataNew, "matrix")) : FALSE 

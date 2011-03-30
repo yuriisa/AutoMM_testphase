@@ -1,0 +1,29 @@
+%\VignetteIndexEntry{Introduction to MixABEL}
+\documentclass{article}
+
+%\usepackage{hyperref}
+%
+%\hypersetup{colorlinks,%
+%           citecolor=black,%
+%            linkcolor=blue,%
+%            urlcolor=blue,%
+%            }
+
+\title{Introduction to MixABEL}
+\author{many}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+This vignette demonstrates the use of all major \texttt{MixABEL}
+%<<>>=
+%library(MixABEL)
+%ls()
+%@
+
+\end{document}
